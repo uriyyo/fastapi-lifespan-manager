@@ -1,0 +1,26 @@
+repos:
+  - repo: local
+    hooks:
+      - id: black
+        language: python
+        name: black
+        pass_filenames: false
+        language_version: python3.8
+        entry: poetry run black fastapi_pagination docs_src tests
+
+  - repo: local
+    hooks:
+      - id: ruff
+        language: python
+        name: ruff
+        pass_filenames: false
+        language_version: python3.8
+        entry: poetry run ruff --fix --exit-non-zero-on-fix --show-fixes fastapi_pagination docs_src tests
+
+  - repo: local
+    hooks:
+      - id: mypy
+        language: python
+        name: mypy
+        pass_filenames: false
+        entry: poetry run mypy fastapi_pagination --show-error-codes
