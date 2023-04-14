@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "fastapi-lifespan-manager"
+version = "0.1.0"
+description = "FastAPI Lifespan Manager"
+authors = ["Yurii Karabas <1998uriyyo@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "fastapi_lifespan_manager" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
