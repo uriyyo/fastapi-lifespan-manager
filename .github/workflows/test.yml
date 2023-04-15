@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install -E all
+          poetry install
 
       - name: Unit tests
         run: |
