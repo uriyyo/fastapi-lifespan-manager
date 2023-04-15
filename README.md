@@ -1,6 +1,10 @@
+<h1 align="center">
+Fastapi LifespanManager
+</h1>
+
 `fastapi-lifespan-manager` is a Python library that provides a lifespan manager for FastAPI applications.
-`FastAPI` is a modern, fast (high-performance) web framework for building APIs with Python 3.7+ based on standard
-Python type hints. The lifespan manager in `fastapi-lifespan-manager` allows you to have multiple lifespan in one
+
+The `LifespanManager` in `fastapi-lifespan-manager` allows you to have multiple lifespan in one
 application.
 
 This library is particularly useful for managing background tasks, such as starting and stopping a database
