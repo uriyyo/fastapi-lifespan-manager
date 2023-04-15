@@ -11,7 +11,7 @@ from typing import (
     ContextManager,
     Dict,
     Generic,
-    Iterator,
+    Iterable,
     List,
     Literal,
     Optional,
@@ -55,19 +55,19 @@ class LifespanManager(Generic[TApp]):
     if TYPE_CHECKING:
 
         @overload
-        def __new__(cls, __lifespans: Iterator[RawLifespan[TApp]], /) -> LifespanManager[TApp]:
+        def __new__(cls, __lifespans: Iterable[RawLifespan[TApp]], /) -> LifespanManager[TApp]:
             pass
 
         @overload
         def __new__(cls, __lifespans: Literal[None] = None, /) -> LifespanManager[FastAPI]:
             pass
 
-        def __new__(cls, __lifespans: Optional[Iterator[RawLifespan[TApp]]] = ..., /) -> LifespanManager[Any]:
+        def __new__(cls, __lifespans: Optional[Iterable[RawLifespan[TApp]]] = ..., /) -> LifespanManager[Any]:
             pass
 
     else:
 
-        def __init__(self, lifespans: Optional[Iterator[RawLifespan[TApp]]] = None, /) -> None:
+        def __init__(self, lifespans: Optional[Iterable[RawLifespan[TApp]]] = None, /) -> None:
             self.lifespans = [*(lifespans or [])]
 
     def add(self, lifespan: RawLifespan[TApp]) -> RawLifespan[TApp]:
