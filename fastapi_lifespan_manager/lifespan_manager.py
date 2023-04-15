@@ -88,7 +88,6 @@ class LifespanManager(Generic[TApp]):
                 if sub_state:
                     state.update(sub_state)
 
-            print(state)
             yield state
 
 
