@@ -46,6 +46,42 @@ def _ctx_with_state(_):
     yield STATE
 
 
+async def _async_gen_no_state_no_app():
+    yield
+
+
+async def _async_gen_with_state_no_app():
+    yield STATE
+
+
+@asynccontextmanager
+async def _async_ctx_no_state_no_app():
+    yield
+
+
+@asynccontextmanager
+async def _async_ctx_with_state_no_app():
+    yield STATE
+
+
+def _gen_no_state_no_app():
+    yield
+
+
+def _gen_with_state_no_app():
+    yield STATE
+
+
+@contextmanager
+def _ctx_no_state_no_app():
+    yield
+
+
+@contextmanager
+def _ctx_with_state_no_app():
+    yield STATE
+
+
 async def get_state(manager: LifespanManager):
     app = FastAPI(lifespan=manager)
 
@@ -64,6 +100,14 @@ async def get_state(manager: LifespanManager):
         (_gen_with_state, True),
         (_ctx_no_state, False),
         (_ctx_with_state, True),
+        (_async_gen_no_state_no_app, False),
+        (_async_gen_with_state_no_app, True),
+        (_async_ctx_no_state_no_app, False),
+        (_async_ctx_with_state_no_app, True),
+        (_gen_no_state_no_app, False),
+        (_gen_with_state_no_app, True),
+        (_ctx_no_state_no_app, False),
+        (_ctx_with_state_no_app, True),
     ],
 )
 @pytest.mark.asyncio()

@@ -59,6 +59,11 @@ def test_manager_with_args():
 
 
 @pytest.mark.parametrize(
+    "no_app",
+    [False, True],
+    ids=["with-app", "no-app"],
+)
+@pytest.mark.parametrize(
     "code",
     [
         """\
@@ -101,7 +106,10 @@ def test_manager_with_args():
         "async-ctx-with-state",
     ],
 )
-def test_different_kind_of_lifespans(code):
+def test_different_kind_of_lifespans(no_app, code):
+    if no_app:
+        code = code.replace("app: FastAPI", "")
+
     output = _run_mypy(
         f"""
     from fastapi import FastAPI
@@ -111,7 +119,8 @@ def test_different_kind_of_lifespans(code):
 
 {code}
 
-    manager = LifespanManager([_lifespan])
+    manager = LifespanManager()
+    manager.add(_lifespan)
     """,
     )
 

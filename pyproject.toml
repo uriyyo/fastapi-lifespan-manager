@@ -68,6 +68,7 @@ select = [
     "SIM", # flake8-simplify
     "TRY", # tryceratops
     "RUF", # ruff specific rules
+    "T20", # flake8-print
 ]
 ignore = [
     "B008", # do not perform function calls in argument defaults
