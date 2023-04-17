@@ -2,21 +2,21 @@ from typing import Any, AsyncContextManager, AsyncIterator, Callable, ContextMan
 
 from typing_extensions import TypeAlias, TypeVar
 
+TApp = TypeVar("TApp")
+
+
 NoState: TypeAlias = None
 State: TypeAlias = Mapping[str, Any]
 AnyState: Any = Union[NoState, State]
 
-TApp = TypeVar("TApp")
+AnyContextManager: TypeAlias = Union[ContextManager[AnyState], AsyncContextManager[AnyState]]
+AnyIterator: TypeAlias = Union[Iterator[AnyState], AsyncIterator[AnyState]]
 
 RawLifespan: TypeAlias = Union[
-    Callable[[TApp], Iterator[NoState]],
-    Callable[[TApp], Iterator[State]],
-    Callable[[TApp], ContextManager[NoState]],
-    Callable[[TApp], ContextManager[State]],
-    Callable[[TApp], AsyncIterator[NoState]],
-    Callable[[TApp], AsyncIterator[State]],
-    Callable[[TApp], AsyncContextManager[NoState]],
-    Callable[[TApp], AsyncContextManager[State]],
+    # (app) -> ...
+    Callable[[TApp], Union[AnyContextManager, AnyIterator]],
+    # () -> ...
+    Callable[[], Union[AnyContextManager, AnyIterator]],
 ]
 Lifespan: TypeAlias = Union[
     Callable[[TApp], AsyncContextManager[NoState]],
@@ -30,4 +30,6 @@ __all__ = [
     "AnyState",
     "Lifespan",
     "RawLifespan",
+    "AnyContextManager",
+    "AnyIterator",
 ]

@@ -8,6 +8,7 @@ from typing import (
     Any,
     AsyncContextManager,
     AsyncIterator,
+    Callable,
     ContextManager,
     Dict,
     Generic,
@@ -23,7 +24,14 @@ from typing import (
 from fastapi import FastAPI
 from fastapi.concurrency import contextmanager_in_threadpool
 
-from .types import AnyState, RawLifespan, State, TApp
+from .types import AnyContextManager, AnyState, RawLifespan, State, TApp
+
+
+def _maybe_call(call: Callable[..., AnyContextManager], app: Optional[TApp]) -> AnyContextManager:
+    try:
+        return call(app)
+    except TypeError:
+        return call()
 
 
 def _convert_raw_lifespan_to_ctx(
@@ -31,11 +39,11 @@ def _convert_raw_lifespan_to_ctx(
     raw_lifespan: RawLifespan[TApp],
 ) -> Union[ContextManager[AnyState], AsyncContextManager[AnyState]]:
     if inspect.isasyncgenfunction(raw_lifespan):
-        return asynccontextmanager(raw_lifespan)(app)
+        return _maybe_call(asynccontextmanager(raw_lifespan), app)
     if inspect.isgeneratorfunction(raw_lifespan):
-        return contextmanager(raw_lifespan)(app)
+        return _maybe_call(contextmanager(raw_lifespan), app)
 
-    return cast(Union[ContextManager[AnyState], AsyncContextManager[AnyState]], raw_lifespan(app))
+    return _maybe_call(cast(Callable[..., AnyContextManager], raw_lifespan), app)
 
 
 @asynccontextmanager
