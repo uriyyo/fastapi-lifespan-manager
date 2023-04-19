@@ -23,6 +23,7 @@ from typing import (
 
 from fastapi import FastAPI
 from fastapi.concurrency import contextmanager_in_threadpool
+from typing_extensions import Self
 
 from .types import AnyContextManager, AnyState, RawLifespan, State, TApp
 
@@ -84,6 +85,9 @@ class LifespanManager(Generic[TApp]):
 
     def remove(self, lifespan: RawLifespan[TApp]) -> None:
         self.lifespans.remove(lifespan)
+
+    def include(self, other: Self) -> None:
+        self.lifespans.extend(other.lifespans)
 
     @asynccontextmanager
     async def __call__(self, app: TApp) -> AsyncIterator[State]:

@@ -156,3 +156,24 @@ async def test_remove():
     await get_state(manager)
 
     assert not called
+
+
+@pytest.mark.asyncio()
+async def test_include():
+    calls = 0
+
+    def _lifespan():
+        nonlocal calls
+        calls += 1
+        yield
+
+    parent = LifespanManager([_lifespan])
+    child = LifespanManager([_lifespan])
+
+    await get_state(parent)
+    assert calls == 1
+
+    parent.include(child)
+
+    await get_state(parent)
+    assert calls == 3
