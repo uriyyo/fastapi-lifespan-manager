@@ -6,7 +6,7 @@ import pytest
 
 def _run_mypy(code: str) -> str:
     code = textwrap.dedent(code).strip()
-    res = run(f"poetry run mypy -c '{code}'", capture_output=True, text=True, shell=True)
+    res = run(f"poetry run mypy -c '{code}'", capture_output=True, text=True, shell=True)  # noqa: S602
 
     return res.stdout
 
