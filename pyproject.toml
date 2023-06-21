@@ -74,6 +74,7 @@ ignore = [
     "B008", # do not perform function calls in argument defaults
     "S101", # allow use assert
     "E501", # allow long lines
+    "RUF013", # implicit optional 
 ]
 exclude = [
     ".bzr",
