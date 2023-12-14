@@ -1,6 +1,6 @@
-from typing import Any, AsyncContextManager, AsyncIterator, Callable, ContextManager, Iterator, Mapping, Union
+from typing import Any, AsyncContextManager, AsyncIterator, Callable, ContextManager, Iterator, Mapping, TypeVar, Union
 
-from typing_extensions import TypeAlias, TypeVar
+from typing_extensions import TypeAlias
 
 TApp = TypeVar("TApp")
 

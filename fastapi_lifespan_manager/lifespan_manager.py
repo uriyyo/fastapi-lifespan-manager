@@ -90,14 +90,16 @@ class LifespanManager(Generic[TApp]):
         self.lifespans.extend(other.lifespans)
 
     @asynccontextmanager
-    async def __call__(self, app: TApp) -> AsyncIterator[State]:
+    async def __call__(self, app: TApp) -> AsyncIterator[Optional[State]]:
         async with AsyncExitStack() as astack:
-            state: Dict[str, Any] = {}
+            state: Optional[Dict[str, Any]] = None
 
             for raw_lifespan in self.lifespans:
                 sub_state = await astack.enter_async_context(_run_raw_lifespan(raw_lifespan, app))
 
                 if sub_state:
+                    if state is None:
+                        state = {}
                     state.update(sub_state)
 
             yield state
