@@ -25,7 +25,7 @@ from fastapi import FastAPI
 from fastapi.concurrency import contextmanager_in_threadpool
 from typing_extensions import Self
 
-from .types import AnyContextManager, AnyState, RawLifespan, State, TApp
+from .types import AnyContextManager, AnyState, RawLifespan, TApp
 
 
 def _maybe_call(call: Callable[..., AnyContextManager], app: Optional[TApp]) -> AnyContextManager:
@@ -90,7 +90,7 @@ class LifespanManager(Generic[TApp]):
         self.lifespans.extend(other.lifespans)
 
     @asynccontextmanager
-    async def __call__(self, app: TApp) -> AsyncIterator[Optional[State]]:
+    async def __call__(self, app: TApp) -> AsyncIterator[AnyState]:
         async with AsyncExitStack() as astack:
             state: Optional[Dict[str, Any]] = None
 

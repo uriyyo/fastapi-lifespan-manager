@@ -19,6 +19,20 @@ def _normalize_check(code: str = "", success: bool = True) -> str:
     return code + "Success: no issues found in 1 source file\n" if success else ""
 
 
+def test_pass_manager_to_app():
+    output = _run_mypy(
+        """
+    from fastapi import FastAPI
+    from fastapi_lifespan_manager import LifespanManager
+
+    manager = LifespanManager()
+    app = FastAPI(lifespan=manager)
+    """,
+    )
+
+    assert output == _normalize_check()
+
+
 def test_manager_no_args():
     output = _run_mypy(
         """
