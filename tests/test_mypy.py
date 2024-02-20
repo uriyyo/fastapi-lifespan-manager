@@ -73,40 +73,39 @@ def test_manager_with_args():
 
 
 @pytest.mark.parametrize(
-    "no_app",
-    [False, True],
-    ids=["with-app", "no-app"],
+    "type_",
+    ["with-app", "with-state", "no-args"],
 )
 @pytest.mark.parametrize(
     "code",
     [
         """\
-    def _lifespan(app: FastAPI) -> Iterator[NoState]:
+    def _lifespan() -> Iterator[NoState]:
         yield""",
         """\
-    def _lifespan(app: FastAPI) -> Iterator[State]:
+    def _lifespan() -> Iterator[State]:
         yield {}""",
         """\
     @contextmanager
-    def _lifespan(app: FastAPI) -> Iterator[NoState]:
+    def _lifespan() -> Iterator[NoState]:
         yield""",
         """\
     @contextmanager
-    def _lifespan(app: FastAPI) -> Iterator[State]:
+    def _lifespan() -> Iterator[State]:
         yield {}""",
         """\
-    async def _lifespan(app: FastAPI) -> AsyncIterator[NoState]:
+    async def _lifespan() -> AsyncIterator[NoState]:
         yield""",
         """\
-    async def _lifespan(app: FastAPI) -> AsyncIterator[State]:
+    async def _lifespan() -> AsyncIterator[State]:
         yield {}""",
         """\
     @asynccontextmanager
-    async def _lifespan(app: FastAPI) -> AsyncIterator[NoState]:
+    async def _lifespan() -> AsyncIterator[NoState]:
         yield""",
         """\
     @asynccontextmanager
-    async def _lifespan(app: FastAPI) -> AsyncIterator[State]:
+    async def _lifespan() -> AsyncIterator[State]:
         yield {}""",
     ],
     ids=[
@@ -120,9 +119,11 @@ def test_manager_with_args():
         "async-ctx-with-state",
     ],
 )
-def test_different_kind_of_lifespans(no_app, code):
-    if no_app:
-        code = code.replace("app: FastAPI", "")
+def test_different_kind_of_lifespans(type_, code):
+    if type_ == "with-app":
+        code = code.replace("()", "(app: FastAPI)")
+    if type_ == "with-state":
+        code = code.replace("()", "(app: FastAPI, state: State)")
 
     output = _run_mypy(
         f"""
