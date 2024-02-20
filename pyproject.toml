@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-lifespan-manager"
-version = "0.1.4"
+version = "0.1.5"
 description = "FastAPI Lifespan Manager"
 authors = ["Yurii Karabas <1998uriyyo@gmail.com>"]
 license = "MIT"
