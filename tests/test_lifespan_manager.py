@@ -138,6 +138,23 @@ async def test_add():
 
 
 @pytest.mark.asyncio()
+async def test_state_inside_lifespan():
+    manager = LifespanManager()
+
+    @manager.add
+    async def _lifespan_1(app, state):
+        assert state == {}
+        yield {"foo": "bar"}
+
+    @manager.add
+    async def _lifespan_2(app, state):
+        assert state == {"foo": "bar"}
+        yield
+
+    await get_state(manager)
+
+
+@pytest.mark.asyncio()
 async def test_remove():
     manager = LifespanManager()
 

@@ -50,6 +50,9 @@ exclude = '''
 
 [tool.ruff]
 line-length = 120
+target-version = "py38"
+
+[tool.ruff.lint]
 select = [
     "E", # pycodestyle errors
     "W", # pycodestyle warnings
@@ -100,9 +103,8 @@ exclude = [
 ]
 per-file-ignores = { }
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-target-version = "py38"
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 10
 
 [tool.mypy]
