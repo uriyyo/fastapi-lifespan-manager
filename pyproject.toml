@@ -22,7 +22,7 @@ httpx = ">=0.24,<0.28"
 asgi-lifespan = "^2.1.0"
 uvicorn = ">=0.21.1,<0.28.0"
 mypy = "^1.2.0"
-ruff = ">=0.0.261,<0.3.1"
+ruff = ">=0.0.261,<0.3.2"
 typing-extensions = "^4.5.0"
 
 [tool.black]
