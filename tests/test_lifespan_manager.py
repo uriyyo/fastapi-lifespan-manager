@@ -110,7 +110,7 @@ async def get_state(manager: LifespanManager):
         (_ctx_with_state_no_app, True),
     ],
 )
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_lifespan_manager(raw_lifespan, has_state):
     manager = LifespanManager([raw_lifespan])
 
@@ -118,7 +118,7 @@ async def test_lifespan_manager(raw_lifespan, has_state):
     assert state == (STATE if has_state else {})
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_add():
     manager = LifespanManager()
 
@@ -137,7 +137,7 @@ async def test_add():
     assert called
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_state_inside_lifespan():
     manager = LifespanManager()
 
@@ -154,7 +154,7 @@ async def test_state_inside_lifespan():
     await get_state(manager)
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_remove():
     manager = LifespanManager()
 
@@ -175,7 +175,7 @@ async def test_remove():
     assert not called
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_include():
     calls = 0
 
