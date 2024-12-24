@@ -4,6 +4,6 @@ from .types import State as State
 
 __all__ = [
     "LifespanManager",
-    "State",
     "NoState",
+    "State",
 ]
