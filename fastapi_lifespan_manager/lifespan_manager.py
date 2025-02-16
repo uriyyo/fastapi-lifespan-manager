@@ -11,10 +11,8 @@ from typing import (
     AsyncIterator,
     Callable,
     ContextManager,
-    Dict,
     Generic,
     Iterable,
-    List,
     Literal,
     Optional,
     Union,
@@ -68,7 +66,7 @@ async def _run_raw_lifespan(
 
 
 class LifespanManager(Generic[TApp]):
-    lifespans: List[RawLifespan[TApp]]
+    lifespans: list[RawLifespan[TApp]]
 
     if TYPE_CHECKING:
 
@@ -101,7 +99,7 @@ class LifespanManager(Generic[TApp]):
     @asynccontextmanager
     async def __call__(self, app: TApp) -> AsyncIterator[AnyState]:
         async with AsyncExitStack() as astack:
-            state: Dict[str, Any] = {}
+            state: dict[str, Any] = {}
             state_proxy: State = MappingProxyType(state)
 
             for raw_lifespan in self.lifespans:
