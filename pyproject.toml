@@ -85,7 +85,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 max-complexity = 10
 
 [tool.mypy]
-python_version = "3.10"
+python_version = 3.10
 strict = true
 follow_imports = "normal"
 ignore_missing_imports = true
